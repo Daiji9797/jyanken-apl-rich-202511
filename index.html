@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ja">
+<!-- 最初の設定は終わっています　必要な方は触ってください -->
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>じゃんけんアプリ</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<!-- 最初の設定は終わっています　必要な方は触ってください -->
+
+<body>
+  <h1>じゃんけんアプリ</h1>
+  <p class="Explanation" id="explanation"></p>
+  <p class="Explanation" id="explanation2"></p>
+  <p class="Explanation" id="explanation3"></p>
+  <p id="message">スタートボタンを押してね</p> 
+  <div id="start-menu">
+    <button id="battle-start">スタート</button>
+  </div>
+  
+  <!-- バトル画面 -->
+  <div id="battle-screen" style="display: none;">
+    <div class="battle-background">
+      <img src="img/back_picter_standard.png" alt="背景" class="background-image">
+    </div>
+    <div class="enemy-container">
+      <img src="img/character_battle_opponent_1.png" alt="敵キャラ" class="enemy-character">
+    </div>
+    <div class="supporter-container" style="display: none;">
+      <img src="img/character_battle_supporter_1.png" alt="味方キャラ" class="supporter-character">
+    </div>
+    
+    <!-- 体力ゲージ -->
+    <div class="health-container">
+      <div class="player-health">
+        <p>自分</p>
+        <div class="health-bar">
+          <div class="health-bar-fill" id="player-health-bar"></div>
+        </div>
+        <p id="player-hp-text">1000 / 1000</p>
+      </div>
+      <div class="enemy-health">
+        <p>敵</p>
+        <div class="health-bar">
+          <div class="health-bar-fill" id="enemy-health-bar"></div>
+        </div>
+        <p id="enemy-hp-text">1000 / 1000</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- メッセージウィンドウ -->
+  <div id="message-window" style="display: none;">
+    <div class="message-box">
+      <p id="battle-message">メッセージがここに表示されます</p>
+    </div>
+  </div>
+  
+  <div id="battle-menu" style="display: none;">
+    <button id="Attack" class="battle-btn">たたかう</button>
+    <button id="Talk" class="battle-btn">はなしあう</button>
+    <button id="break" class="battle-btn">こわす</button>
+    <button id="cry" class="battle-btn">なみだする</button>
+    <button id="pray" class="battle-btn" style="display: none;">いのる</button>
+  </div>
+  
+  <!-- 戻るボタン -->
+  <div id="return-menu" style="display: none;">
+    <button id="return-btn" class="return-button">スタート画面に戻る</button>
+  </div>
+  <!-- ここから上にコードを書く -->
+  <!-- この中に記述していく -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,269 @@
+/* 基本スタイル */
+body {
+  font-family: 'Arial', 'メイリオ', sans-serif;
+  text-align: center;
+  padding: 10px;
+  background-color: #f0f0f0;
+}
+
+h1 {
+  color: black;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.Explanation {
+  text-align: left;
+  max-width: 500px;
+  margin: 5px auto;
+  padding-left: 50px;
+  min-height: 20px;
+}
+
+#explanation2 {
+  min-height: 20px;
+}
+
+#explanation3 {
+  min-height: 20px;
+}
+
+/* スタートメニュー */
+#start-menu {
+  margin: 15px 0;
+}
+
+#battle-start {
+  font-size: 20px;
+  padding: 12px 30px;
+  background-color: #ff6b6b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+#battle-start::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(90deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.3) 50%, 
+    rgba(255, 255, 255, 0) 100%);
+  transform: skewX(-25deg);
+  animation: glassShine 2s infinite;
+}
+
+/* ガラスの光沢アニメーション */
+@keyframes glassShine {
+  0% {
+    left: -100%;
+  }
+  50%, 100% {
+    left: 200%;
+  }
+}
+
+#battle-start:hover {
+  background-color: #ff5252;
+}
+
+/* バトル画面 */
+#battle-screen {
+  position: relative;
+  margin: 10px auto;
+  max-width: 800px;
+}
+
+.battle-background {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.background-image {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  display: block;
+}
+
+.enemy-container {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.enemy-character {
+  max-width: 180px;
+  height: auto;
+}
+
+.supporter-container {
+  position: absolute;
+  top: 70%;
+  left: 20%;
+  transform: translateX(-50%);
+}
+
+.supporter-character {
+  max-width: 150px;
+  height: auto;
+}
+
+/* 体力ゲージコンテナ */
+.health-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px auto;
+  max-width: 600px;
+  gap: 20px;
+}
+
+.player-health, .enemy-health {
+  flex: 1;
+}
+
+.player-health p, .enemy-health p {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 3px 0;
+}
+
+.health-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  border: 2px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.health-bar-fill {
+  height: 100%;
+  background: #4CAF50;
+  transition: width 0.5s ease;
+  width: 100%;
+}
+
+#player-hp-text, #enemy-hp-text {
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* バトルメニュー */
+#battle-menu {
+  margin: 15px auto;
+  max-width: 600px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.battle-btn {
+  font-size: 15px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: 2px solid black;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 120px;
+}
+
+.battle-btn:hover {
+  background-color: #45a049;
+  transform: scale(1.05);
+}
+
+#break {
+  background-color: #f44336;
+}
+
+#break:hover {
+  background-color: #da190b;
+}
+
+#pray {
+  background-color: #2196F3;
+}
+
+#pray:hover {
+  background-color: #0b7dda;
+}
+
+#message {
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  margin: 10px 0;
+  min-height: 20px;
+}
+
+/* メッセージウィンドウ */
+#message-window {
+  margin: 10px auto;
+  max-width: 700px;
+}
+
+.message-box {
+  background-color: #fff;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  height: 100px;
+  max-height: 100px;
+  overflow-y: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#battle-message {
+  font-size: 15px;
+  font-weight: bold;
+  color: #333;
+  line-height: 1.5;
+  margin: 0;
+  word-wrap: break-word;
+}
+
+/* 戻るボタン */
+#return-menu {
+  margin: 15px auto;
+  text-align: center;
+}
+
+.return-button {
+  font-size: 16px;
+  padding: 12px 30px;
+  background-color: #9C27B0;
+  color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: bold;
+}
+
+.return-button:hover {
+  background-color: #7B1FA2;
+  transform: scale(1.05);
+}
