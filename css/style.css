@@ -51,28 +51,28 @@ p {
   overflow: hidden;
 }
 
-#battle-start::before {
+#battle-start::before { /*startボタンの前の擬似要素*/
   content: '';
-  position: absolute;
-  top: -50%;
-  left: -100%;
-  width: 50%;
-  height: 200%;
-  background: linear-gradient(90deg, 
-    rgba(255, 255, 255, 0) 0%, 
-    rgba(255, 255, 255, 0.3) 50%, 
-    rgba(255, 255, 255, 0) 100%);
-  transform: skewX(-25deg);
-  animation: glassShine 2s infinite;
+  position: absolute; /* 擬似要素を使用して光沢効果を作成 */
+  top: -50%; /* ボタンの上部から少しはみ出すように設定 */
+  left: -100%; /* 左端から開始 */
+  width: 50%; 
+  height: 200%; /* 高さを200％に設定するのは、斜めに傾けたときにボタン全体を覆うため */
+  background: linear-gradient(90deg, /* ガラスの光沢効果のグラデーション */
+    rgba(255, 255, 255, 0) 0%,   /* 透明から始まる */
+    rgba(255, 255, 255, 0.3) 50%, /* 中間の光沢 */
+    rgba(255, 255, 255, 0) 100%); /* 透明に戻る */
+  transform: skewX(-25deg); /* 斜めに-25％傾ける */
+  animation: glassShine 2s infinite; /* アニメーションを適用2秒 */
 }
 
 /* ガラスの光沢アニメーション */
 @keyframes glassShine {
   0% {
-    left: -100%;
+    left: -100%; /* 左端から開始 */
   }
-  50%, 100% {
-    left: 200%;
+  50%, 100% {  /* 中間と終了位置 */
+    left: 200%; /* 右端まで移動 */
   }
 }
 
@@ -133,33 +133,38 @@ p {
   gap: 20px;
 }
 
+/* 体力ゲージ */
 .player-health, .enemy-health {
   flex: 1;
 }
 
+/* 体力ゲージのラベル */
 .player-health p, .enemy-health p {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: bold; /* 太字に変更 */
   margin: 3px 0;
 }
 
+/* 体力バー */
 .health-bar {
   width: 100%;
   height: 20px;
   background-color: #ddd;
   border: 2px solid black;
-  border-radius: 10px;
+  border-radius: 10px; /* 角を丸くする */
   overflow: hidden;
   position: relative;
 }
 
+/* 体力バーの中身 */
 .health-bar-fill {
   height: 100%;
-  background: #4CAF50;
-  transition: width 0.5s ease;
+  background: #4CAF50; /* 緑色の体力バー */
+  transition: width 0.5s ease; /* 幅の変化にアニメーションを追加 */
   width: 100%;
 }
 
+/* 体力テキスト */
 #player-hp-text, #enemy-hp-text {
   font-size: 12px;
   margin-top: 3px;
@@ -169,12 +174,13 @@ p {
 #battle-menu {
   margin: 15px auto;
   max-width: 600px;
-  display: flex;
-  flex-wrap: wrap;
+  display: flex; /* バトルメニューのボタンを横並びにする */ 
+  flex-wrap: wrap; /* 画面幅が狭い場合に折り返す */
   justify-content: center;
   gap: 10px;
 }
 
+/* バトルメニューボタン */
 .battle-btn {
   font-size: 15px;
   padding: 10px 20px;
@@ -182,14 +188,14 @@ p {
   color: white;
   border: 2px solid black;
   border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s;
+  cursor: pointer; /* ポインターに変更 */
+  transition: all 0.3s; /* ホバー効果のためのトランジション */
   min-width: 120px;
 }
 
 .battle-btn:hover {
   background-color: #45a049;
-  transform: scale(1.05);
+  transform: scale(1.05); /* ホバー時に少し拡大 */
 }
 
 #break {
@@ -222,6 +228,7 @@ p {
   max-width: 700px;
 }
 
+/* メッセージボックス */
 .message-box {
   background-color: #fff;
   border: 3px solid black;
@@ -236,11 +243,12 @@ p {
   justify-content: center;
 }
 
+/* バトルメッセージ */
 #battle-message {
   font-size: 15px;
   font-weight: bold;
   color: #333;
-  line-height: 1.5;
+  line-height: 1.5; /* 行間を1.5に設定 */
   margin: 0;
   word-wrap: break-word;
 }
@@ -253,17 +261,17 @@ p {
 
 .return-button {
   font-size: 16px;
-  padding: 12px 30px;
+  padding: 12px 30px; 
   background-color: #9C27B0;
   color: white;
   border: 2px solid black;
-  border-radius: 10px;
+  border-radius: 10px; /* 角を丸くする */
   cursor: pointer;
-  transition: all 0.3s;
+  transition: all 0.3s; /* ホバー効果のためのトランジション */
   font-weight: bold;
 }
 
 .return-button:hover {
   background-color: #7B1FA2;
-  transform: scale(1.05);
+  transform: scale(1.05); /* ホバー時に少し拡大 */
 }

@@ -132,6 +132,7 @@ function startBattle() {
   $('#message').text('');
   showMessage('戦闘開始！行動を選んでください');
   
+  // 体力ゲージ初期化
   updateHealthBars();
   
   // 60秒後に「いのる」ボタンを表示
@@ -146,14 +147,14 @@ function startBattle() {
 
 // 体力ゲージ更新
 function updateHealthBars() {
-  const playerPercent = (playerHP / maxHP) * 100;
-  const enemyPercent = (enemyHP / maxHP) * 100;
+  const playerPercent = (playerHP / maxHP) * 100; // プレイヤー体力の割合を計算
+  const enemyPercent = (enemyHP / maxHP) * 100; // 敵体力の割合を計算
   
-  $('#player-health-bar').css('width', playerPercent + '%');
-  $('#enemy-health-bar').css('width', enemyPercent + '%');
+  $('#player-health-bar').css('width', playerPercent + '%'); // プレイヤーの体力バーの幅を設定
+  $('#enemy-health-bar').css('width', enemyPercent + '%'); // 敵の体力バーの幅を設定
   
-  $('#player-hp-text').text(playerHP + ' / ' + maxHP);
-  $('#enemy-hp-text').text(enemyHP + ' / ' + maxHP);
+  $('#player-hp-text').text(playerHP + ' / ' + maxHP); // プレイヤーの体力テキストを更新
+  $('#enemy-hp-text').text(enemyHP + ' / ' + maxHP); // 敵の体力テキストを更新
   
   // 体力に応じて色を変更
   if (playerPercent <= 30) {
@@ -532,42 +533,7 @@ function endGame() {
   $('#return-menu').show();
 }
 
-// スタート画面に戻る
+// スタート画面に戻る　容量が少ないのでreloadで対応
 function returnToStart() {
-  // すべてをリセット
-  playerHP = maxHP;
-  enemyHP = maxHP;
-  gameStarted = false;
-  prayButtonUnlocked = false;
-  isProcessing = false;
-  supporterSummoned = false; // 味方召喚状態もリセット
-  enemyPhase = 1; // 敵のフェーズもリセット
-  isNightBackground = false; // 夜背景フラグもリセット
-  
-  // 敵画像を第1形態に戻す
-  $('.enemy-character').attr('src', 'img/character_battle_opponent_1.png');
-  
-  // 背景画像を通常の画像に戻す
-  $('.background-image').attr('src', 'img/back_picture_standard.png');
-  
-  // 体力ゲージの色をリセット
-  $('#player-health-bar').css('background', '#4CAF50');
-  $('#enemy-health-bar').css('background', '#4CAF50');
-  
-  // UI更新
-  $('#battle-screen').hide();
-  $('#battle-menu').hide();
-  $('#message-window').hide();
-  $('#return-menu').hide();
-  $('#start-menu').show();
-  $('h1').show();
-  $('.Explanation').show();
-  $('p').show();
-  $('#message').text('スタートボタンを押してね');
-  $('#pray').hide();
-  $('.supporter-container').hide(); // 味方キャラを非表示
-  $('.enemy-container').show(); // 敵キャラを再表示
-  
-  // ボタンを再度有効化
-  $('#battle-menu button').prop('disabled', false);
+  location.reload();
 }
