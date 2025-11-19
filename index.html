@@ -1,82 +1,157 @@
 <!DOCTYPE html>
 <html lang="ja">
-<!-- 最初の設定は終わっています　必要な方は触ってください -->
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>じゃんけんアプリ</title>
-  <link rel="stylesheet" href="css/reset.css">
-  <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>血糖値管理アプリ</title>
+    <!-- リセットCSS: ブラウザのデフォルトスタイルをリセット -->
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- メインスタイルシート: アプリのデザインを定義 -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<!-- 最初の設定は終わっています　必要な方は触ってください -->
-
 <body>
-  <h1>じゃんけんアプリ</h1>
-  <p class="Explanation" id="explanation"></p>
-  <p class="Explanation" id="explanation2"></p>
-  <p class="Explanation" id="explanation3"></p>
-  <p id="message">スタートボタンを押してね</p> 
-  <div id="start-menu">
-    <button id="battle-start">スタート</button>
-  </div>
-  
-  <!-- バトル画面 -->
-  <div id="battle-screen" style="display: none;">
-    <div class="battle-background">
-      <img src="img/back_picter_standard.png" alt="背景" class="background-image">
-    </div>
-    <div class="enemy-container">
-      <img src="img/character_battle_opponent_1.png" alt="敵キャラ" class="enemy-character">
-    </div>
-    <div class="supporter-container" style="display: none;">
-      <img src="img/character_battle_supporter_1.png" alt="味方キャラ" class="supporter-character">
+    <!-- 初期化ボタン（固定位置：画面右上） -->
+    <button class="btn btn-reset" onclick="location.reload()">初期化</button>
+    
+    <!-- メインコンテナ: アプリ全体を囲む白い箱 -->
+    <div class="container">
+        <!-- ========================================
+             ヘッダーセクション
+             ======================================== -->
+        <h1>血糖値管理アプリ</h1>
+        <p class="subtitle">食事内容から血糖値の変化を予測し、健康管理をサポートします</p>
+
+        <!-- ========================================
+             入力セクション: 食品情報の入力エリア
+             ======================================== -->
+        <div class="input-section">
+            <!-- 食品名入力 -->
+            <div class="input-group">
+                <label for="foodInput">食品名</label>
+                <input type="text" id="foodInput" placeholder="例: ごはん、パン、バナナ">
+            </div>
+
+            <!-- GI値の参考情報 -->
+            <div class="gi-info-box">
+                <div class="gi-info-content">
+                    <strong>◆ GI値の目安:</strong><br>
+                    <span class="gi-high">● 高GI (70以上):</span> 白パン93、じゃがいも90、白米84<br>
+                    <span class="gi-medium">● 中GI (56-69):</span> パスタ65、玄米56<br>
+                    <span class="gi-low">● 低GI (55以下):</span> りんご36、牛乳25、ナッツ類15<br>
+                    <br>
+                    <strong>◆ GI値計算式:</strong><br>
+                    <span class="gi-formula">推定GI値 = 基準GI値 × (1 - 食物繊維係数) × (1 - 脂質係数) × (1 - タンパク質係数)</span><br>
+                    <br>
+                    <strong>◆ データソース:</strong><br>
+                    <span class="gi-source">ローカルDB + <a href="https://jp.openfoodfacts.org/" target="_blank" class="gi-link">Open Food Facts API</a>（日本版）</span>
+                </div>
+            </div>
+
+            <!-- 追加された食品のリスト表示エリア -->
+            <div class="food-list" id="foodList"></div>
+
+            <!-- 食品の量入力 -->
+            <div class="input-group">
+                <label for="amountInput">量 (グラム)</label>
+                <input type="number" id="amountInput" placeholder="例: 150" min="1">
+
+                <div class="serving-note">分量の目安: ごはん（茶碗1杯・普通盛り）150 g ・ 菓子パン（普通）80 g ・ 食パン（1枚）60 g</div>
+            </div>
+
+            <!-- 食事タイプは未使用のため削除しました -->
+
+            <!-- 食品追加ボタン -->
+            <div class="input-group">
+                <button class="btn btn-add" onclick="addFood()">食品を追加</button>
+            </div>
+
+            <!-- 血糖値予測実行ボタン -->
+            <button class="btn" onclick="calculateBloodSugar()">血糖値を予測する</button>
+        </div>
+
+        <!-- ========================================
+             結果表示セクション: 計算結果を表示するエリア
+             初期状態では非表示（display: none）
+             ======================================== -->
+        <div class="result-section" id="resultSection">
+            
+            <!-- 血糖値予測結果カード -->
+            <div class="result-card" id="resultCard">
+                <div class="blood-sugar-label">予測血糖値上昇</div>
+                <div class="blood-sugar-value">-- mg/dL</div>
+                <div class="status-badge">--</div>
+            </div>
+
+            <!-- 栄養情報表示エリア -->
+            <div class="nutrition-info">
+                <h3>■ 栄養情報</h3>
+                <div class="nutrition-grid">
+                    <!-- 炭水化物 -->
+                    <div class="nutrition-item">
+                        <div class="value" id="carbsValue">0</div>
+                        <div class="label">炭水化物 (g)</div>
+                    </div>
+                    <!-- カロリー -->
+                    <div class="nutrition-item">
+                        <div class="value" id="caloriesValue">0</div>
+                        <div class="label">カロリー (kcal)</div>
+                    </div>
+                    <!-- 平均GI値 -->
+                    <div class="nutrition-item">
+                        <div class="value" id="giValue">0</div>
+                        <div class="label">平均GI値</div>
+                    </div>
+                    <!-- 食物繊維 -->
+                    <div class="nutrition-item">
+                        <div class="value" id="fiberValue">0</div>
+                        <div class="label">食物繊維 (g)</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 血糖値推移グラフ表示エリア -->
+            <div class="chart-container">
+                <h3>■ 血糖値の推移予測</h3>
+                <!-- Chart.js グラフがここに描画される -->
+                 <p class="graph-description">ガンマ分布様の曲線で血糖値の上昇と下降を疑似的にモデル化しています。</p>
+                 
+                <canvas id="lineChart" width="600" height="300"></canvas>
+                
+                <!-- グラフの凡例 -->
+                <div class="chart-legend">
+                    <div class="legend-item">
+                        <div class="legend-color normal-range"></div>
+                        <span>正常範囲 (&lt;140)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color warning-range"></div>
+                        <span>注意 (140-180)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color danger-range"></div>
+                        <span>危険域 (180+)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- アドバイス表示エリア -->
+            <div class="advice-section">
+                <h3>!! アドバイス</h3>
+                <!-- アドバイスリストが動的に生成される -->
+                <ul class="advice-list" id="adviceList"></ul>
+            </div>
+        </div>
     </div>
     
-    <!-- 体力ゲージ -->
-    <div class="health-container">
-      <div class="player-health">
-        <p>自分</p>
-        <div class="health-bar">
-          <div class="health-bar-fill" id="player-health-bar"></div>
-        </div>
-        <p id="player-hp-text">1000 / 1000</p>
-      </div>
-      <div class="enemy-health">
-        <p>敵</p>
-        <div class="health-bar">
-          <div class="health-bar-fill" id="enemy-health-bar"></div>
-        </div>
-        <p id="enemy-hp-text">1000 / 1000</p>
-      </div>
-    </div>
-  </div>
-  
-  <!-- メッセージウィンドウ -->
-  <div id="message-window" style="display: none;">
-    <div class="message-box">
-      <p id="battle-message">メッセージがここに表示されます</p>
-    </div>
-  </div>
-  
-  <div id="battle-menu" style="display: none;">
-    <button id="Attack" class="battle-btn">たたかう</button>
-    <button id="Talk" class="battle-btn">はなしあう</button>
-    <button id="break" class="battle-btn">こわす</button>
-    <button id="cry" class="battle-btn">なみだする</button>
-    <button id="pray" class="battle-btn" style="display: none;">いのる</button>
-  </div>
-  
-  <!-- 戻るボタン -->
-  <div id="return-menu" style="display: none;">
-    <button id="return-btn" class="return-button">スタート画面に戻る</button>
-  </div>
-  <!-- ここから上にコードを書く -->
-  <!-- この中に記述していく -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="js/main.js"></script>
-
+    <!-- ========================================
+         外部スクリプト読み込み
+         ======================================== -->
+    <!-- jQuery: DOM操作を簡潔に記述するためのライブラリ -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Chart.js: グラフ描画ライブラリ -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- メインJavaScript: アプリのロジックを実装 -->
+    <script src="js/main.js"></script>
 </body>
-
 </html>

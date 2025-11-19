@@ -1,277 +1,565 @@
-/* 基本スタイル */
+/* 血糖値管理アプリのスタイル */
+
+/* ==============================================
+   リセット・基本設定
+   ============================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ページ全体の背景とレイアウト */
 body {
-  font-family: 'Arial', 'メイリオ', sans-serif;
-  text-align: center;
-  padding: 10px;
-  background-color: #f0f0f0;
+    /* 明朝体（日本語用のフォントスタック） */
+    font-family: "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Yu Mincho", "MS Mincho", "Noto Serif JP", serif;
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 20px;
+
 }
 
+/* ==============================================
+   初期化ボタン（固定位置）
+   ============================================== */
+
+/* 画面右上に固定された初期化ボタン */
+.btn-reset {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: #999;
+    padding: 10px 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ==============================================
+   メインコンテナ
+   ============================================== */
+
+/* アプリ全体を囲む白い箱 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 8px;
+    padding: 30px;
+    margin-top: 40px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ==============================================
+   ヘッダー・タイトル
+   ============================================== */
+
+/* メインタイトル */
 h1 {
-  color: black;
-  margin-bottom: 10px;
-  font-size: 24px;
+    color: #1976d2;
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 2em;
 }
 
-p {
-  margin: 5px 0;
-  font-size: 14px;
+/* サブタイトル（説明文） */
+.subtitle {
+    color: #666;
+    text-align: center;
+    margin-bottom: 30px;
 }
 
-.Explanation {
-  text-align: left;
-  max-width: 500px;
-  margin: 5px auto;
-  padding-left: 50px;
-  min-height: 20px;
+/* ==============================================
+   GI値情報ボックス
+   ============================================== */
+
+/* GI値の参考情報ボックス */
+.gi-info-box {
+    background: #f5f5f5;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
 }
 
-#explanation2 {
-  min-height: 20px;
+/* GI値情報のコンテンツ */
+.gi-info-content {
+    font-size: 13px;
+    color: #666;
 }
 
-#explanation3 {
-  min-height: 20px;
+/* 高GI値の表示（赤色） */
+.gi-high {
+    color: #e53935;
 }
 
-/* スタートメニュー */
-#start-menu {
-  margin: 15px 0;
+/* 中GI値の表示（黄色） */
+.gi-medium {
+    color: #fbc02d;
 }
 
-#battle-start {
-  font-size: 20px;
-  padding: 12px 30px;
-  background-color: #ff6b6b;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  position: relative;
-  overflow: hidden;
+/* 低GI値の表示（青色） */
+.gi-low {
+    color: #1976d2;
 }
 
-#battle-start::before { /*startボタンの前の擬似要素*/
-  content: '';
-  position: absolute; /* 擬似要素を使用して光沢効果を作成 */
-  top: -50%; /* ボタンの上部から少しはみ出すように設定 */
-  left: -100%; /* 左端から開始 */
-  width: 50%; 
-  height: 200%; /* 高さを200％に設定するのは、斜めに傾けたときにボタン全体を覆うため */
-  background: linear-gradient(90deg, /* ガラスの光沢効果のグラデーション */
-    rgba(255, 255, 255, 0) 0%,   /* 透明から始まる */
-    rgba(255, 255, 255, 0.3) 50%, /* 中間の光沢 */
-    rgba(255, 255, 255, 0) 100%); /* 透明に戻る */
-  transform: skewX(-25deg); /* 斜めに-25％傾ける */
-  animation: glassShine 2s infinite; /* アニメーションを適用2秒 */
+/* GI値計算式の表示 */
+.gi-formula {
+    font-size: 12px;
 }
 
-/* ガラスの光沢アニメーション */
-@keyframes glassShine {
-  0% {
-    left: -100%; /* 左端から開始 */
-  }
-  50%, 100% {  /* 中間と終了位置 */
-    left: 200%; /* 右端まで移動 */
-  }
+/* データソースの表示 */
+.gi-source {
+    font-size: 11px;
 }
 
-#battle-start:hover {
-  background-color: #ff5252;
+/* データソースのリンク */
+.gi-link {
+    color: #1976d2;
 }
 
-/* バトル画面 */
-#battle-screen {
-  position: relative;
-  margin: 10px auto;
-  max-width: 800px;
+/* ==============================================
+   ヘッダー・タイトル（続き）
+   ============================================== */
+
+.subtitle {
+    text-align: left;
+    margin-top: 40px;
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 0.9em;
 }
 
-.battle-background {
-  width: 100%;
-  max-width: 800px;
-  margin: 0 auto;
+/* ==============================================
+   入力セクション
+   ============================================== */
+
+/* 入力フォーム全体の背景エリア */
+.input-section {
+    background: #fafafa;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+    border: 1px solid #e0e0e0;
 }
 
-.background-image {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  display: block;
+/* 各入力項目のグループ */
+.input-group {
+    margin-bottom: 20px;
 }
 
-.enemy-container {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translateX(-50%);
+/* 分量の目安メモ */
+.serving-note {
+    font-size: 12px;
+    color: #666;
+    margin-top: 6px;
 }
 
-.enemy-character {
-  max-width: 180px;
-  height: auto;
+/* 入力項目のラベル */
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.95em;
 }
 
-.supporter-container {
-  position: absolute;
-  top: 70%;
-  left: 20%;
-  transform: translateX(-50%);
+/* テキスト入力、数値入力、セレクトボックスの共通スタイル */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1em;
+    transition: border-color 0.3s;
 }
 
-.supporter-character {
-  max-width: 150px;
-  height: auto;
+/* 入力フィールドにフォーカスした時の枠線色 */
+input[type="text"]:focus,
+input[type="number"]:focus,
+select:focus {
+    outline: none;
+    border-color: #1976d2;
 }
 
-/* 体力ゲージコンテナ */
-.health-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 10px auto;
-  max-width: 600px;
-  gap: 20px;
+/* ==============================================
+   食品リスト表示
+   ============================================== */
+
+/* 追加された食品のタグを並べるコンテナ */
+.food-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
-/* 体力ゲージ */
-.player-health, .enemy-health {
-  flex: 1;
+/* 個々の食品タグ（削除ボタン付き） */
+.food-tag {
+    background: #1976d2;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
 }
 
-/* 体力ゲージのラベル */
-.player-health p, .enemy-health p {
-  font-size: 14px;
-  font-weight: bold; /* 太字に変更 */
-  margin: 3px 0;
+/* タグ内の削除ボタン（×印） */
+.food-tag .remove {
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2em;
+    line-height: 1;
 }
 
-/* 体力バー */
-.health-bar {
-  width: 100%;
-  height: 20px;
-  background-color: #ddd;
-  border: 2px solid black;
-  border-radius: 10px; /* 角を丸くする */
-  overflow: hidden;
-  position: relative;
+/* ==============================================
+   ボタン
+   ============================================== */
+
+/* メインボタンの基本スタイル（血糖値を予測する） */
+.btn {
+    background: #66bb6a;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 4px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-/* 体力バーの中身 */
-.health-bar-fill {
-  height: 100%;
-  background: #4CAF50; /* 緑色の体力バー */
-  transition: width 0.5s ease; /* 幅の変化にアニメーションを追加 */
-  width: 100%;
+/* ボタンにマウスオーバーした時 */
+.btn:hover {
+    background: #81c784;
 }
 
-/* 体力テキスト */
-#player-hp-text, #enemy-hp-text {
-  font-size: 12px;
-  margin-top: 3px;
+/* ボタンをクリックした時 */
+.btn:active {
+    background: #4caf50;
 }
 
-/* バトルメニュー */
-#battle-menu {
-  margin: 15px auto;
-  max-width: 600px;
-  display: flex; /* バトルメニューのボタンを横並びにする */ 
-  flex-wrap: wrap; /* 画面幅が狭い場合に折り返す */
-  justify-content: center;
-  gap: 10px;
+/* 食品追加ボタン専用のスタイル */
+.btn-add {
+    background: #1976d2;
+    margin-top: 10px;
 }
 
-/* バトルメニューボタン */
-.battle-btn {
-  font-size: 15px;
-  padding: 10px 20px;
-  background-color: #4CAF50;
-  color: white;
-  border: 2px solid black;
-  border-radius: 8px;
-  cursor: pointer; /* ポインターに変更 */
-  transition: all 0.3s; /* ホバー効果のためのトランジション */
-  min-width: 120px;
+/* 食品追加ボタンにマウスオーバーした時 */
+.btn-add:hover {
+    background: #1e88e5;
 }
 
-.battle-btn:hover {
-  background-color: #45a049;
-  transform: scale(1.05); /* ホバー時に少し拡大 */
+/* ==============================================
+   結果表示セクション
+   ============================================== */
+
+/* 結果セクション全体（初期状態は非表示） */
+.result-section {
+    display: none;
+    margin-top: 30px;
 }
 
-#break {
-  background-color: #f44336;
+/* 血糖値の予測結果を表示するカード */
+.result-card {
+    background: #1976d2;
+    color: white;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
-#break:hover {
-  background-color: #da190b;
+/* 正常範囲の時のカード色 */
+.result-card.normal {
+    background: #1976d2;
 }
 
-#pray {
-  background-color: #2196F3;
+/* 注意が必要な時のカード色 */
+.result-card.warning {
+    background: #fbc02d;
 }
 
-#pray:hover {
-  background-color: #0b7dda;
+/* 危険域の時のカード色 */
+.result-card.danger {
+    background: #e53935;
 }
 
-#message {
-  font-size: 16px;
-  font-weight: bold;
-  color: black;
-  margin: 10px 0;
-  min-height: 20px;
+/* 血糖値の数値表示 */
+.blood-sugar-value {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 15px 0;
 }
 
-/* メッセージウィンドウ */
-#message-window {
-  margin: 10px auto;
-  max-width: 700px;
+/* 血糖値のラベル表示 */
+.blood-sugar-label {
+    font-size: 1.2em;
+    margin-bottom: 10px;
 }
 
-/* メッセージボックス */
-.message-box {
-  background-color: #fff;
-  border: 3px solid black;
-  border-radius: 12px;
-  padding: 15px 20px;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
-  height: 100px;
-  max-height: 100px;
-  overflow-y: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ステータスバッジ（正常/注意/危険） */
+.status-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    font-weight: 600;
+    margin-top: 10px;
 }
 
-/* バトルメッセージ */
-#battle-message {
-  font-size: 15px;
-  font-weight: bold;
-  color: #333;
-  line-height: 1.5; /* 行間を1.5に設定 */
-  margin: 0;
-  word-wrap: break-word;
+/* ==============================================
+   アドバイスセクション
+   ============================================== */
+
+/* アドバイス表示エリア */
+.advice-section {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    border-left: 4px solid #1976d2;
+    margin-bottom: 20px;
 }
 
-/* 戻るボタン */
-#return-menu {
-  margin: 15px auto;
-  text-align: center;
+/* アドバイスセクションの見出し */
+.advice-section h3 {
+    color: #1976d2;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.return-button {
-  font-size: 16px;
-  padding: 12px 30px; 
-  background-color: #9C27B0;
-  color: white;
-  border: 2px solid black;
-  border-radius: 10px; /* 角を丸くする */
-  cursor: pointer;
-  transition: all 0.3s; /* ホバー効果のためのトランジション */
-  font-weight: bold;
+/* アドバイスのリスト全体 */
+.advice-list {
+    list-style: none;
+    padding-left: 0;
 }
 
-.return-button:hover {
-  background-color: #7B1FA2;
-  transform: scale(1.05); /* ホバー時に少し拡大 */
+/* 各アドバイス項目 */
+.advice-list li {
+    padding: 10px 0;
+    padding-left: 25px;
+    position: relative;
+    color: #555;
+    line-height: 1.6;
+}
+
+/* アドバイス項目の先頭に表示するチェックマーク */
+.advice-list li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #66bb6a;
+    font-weight: bold;
+}
+
+/* ==============================================
+   栄養情報セクション
+   ============================================== */
+
+/* 栄養情報の表示エリア */
+.nutrition-info {
+    background: #fafafa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #e0e0e0;
+}
+
+/* 栄養情報セクションの見出し */
+.nutrition-info h3 {
+    color: #1976d2;
+    margin-bottom: 15px;
+}
+
+/* 栄養情報をグリッド状に配置 */
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+/* 個々の栄養項目（炭水化物、カロリーなど） */
+.nutrition-item {
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    text-align: center;
+    border: 1px solid #e0e0e0;
+}
+
+/* 栄養項目の数値 */
+.nutrition-item .value {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #1976d2;
+}
+
+/* 栄養項目のラベル */
+.nutrition-item .label {
+    color: #666;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+/* ==============================================
+   グラフ表示
+   ============================================== */
+
+/* グラフ全体のコンテナ */
+.chart-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+/* 折れ線グラフのメインエリア */
+.line-chart {
+    position: relative;
+    height: 250px;
+    padding: 20px;
+    background: white;
+    border-radius: 4px;
+}
+
+/* グラフ描画用のキャンバスエリア */
+.line-chart-canvas {
+    position: relative;
+    height: 200px;
+    border-left: 2px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+/* SVGグラフ全体のサイズ設定 */
+.line-chart svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* グラフの折れ線 */
+.chart-line {
+    fill: none;
+    stroke: #1976d2;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* グラフの塗りつぶしエリア */
+.chart-area {
+    fill: url(#gradient);
+    opacity: 0.3;
+}
+
+/* グラフ上のデータポイント（点） */
+.chart-point {
+    fill: #1976d2;
+    stroke: white;
+    stroke-width: 2;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+/* データポイントにマウスオーバーした時 */
+.chart-point:hover {
+    r: 8;
+    fill: #1e88e5;
+}
+
+/* グラフのグリッド線（背景の補助線） */
+.chart-grid-line {
+    stroke: #e0e0e0;
+    stroke-width: 1;
+    stroke-dasharray: 5, 5;
+}
+
+/* グラフのラベル（時間など） */
+.chart-label {
+    font-size: 12px;
+    fill: #666;
+    font-weight: 600;
+}
+
+/* グラフの軸ラベル（X軸、Y軸のタイトル） */
+.axis-label {
+    font-size: 13px;
+    fill: #333;
+    font-weight: 700;
+}
+
+/* グラフ上の数値表示 */
+.chart-value {
+    font-size: 11px;
+    fill: #1976d2;
+    font-weight: 600;
+}
+
+/* グラフの凡例エリア */
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 15px;
+    font-size: 0.9em;
+}
+
+/* 凡例の各項目 */
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* 凡例の色サンプル */
+.legend-color {
+    width: 20px;
+    height: 3px;
+    border-radius: 2px;
+}
+
+/* 正常範囲の凡例色 */
+.normal-range {
+    background: #1976d2;
+}
+
+/* 注意範囲の凡例色 */
+.warning-range {
+    background: #fbc02d;
+}
+
+/* 危険域の凡例色 */
+.danger-range {
+    background: #e53935;
+}
+
+/* ==============================================
+   レスポンシブデザイン（スマホ対応）
+   ============================================== */
+
+@media (max-width: 600px) {
+    /* スマホ画面でのコンテナ調整 */
+    .container {
+        padding: 20px;
+    }
+
+    /* スマホ画面でのタイトルサイズ調整 */
+    h1 {
+        font-size: 1.5em;
+    }
+
+    /* スマホ画面での血糖値表示サイズ調整 */
+    .blood-sugar-value {
+        font-size: 2em;
+    }
+
+    /* スマホ画面では栄養情報を縦並びに */
+    .nutrition-grid {
+        grid-template-columns: 1fr;
+    }
 }
